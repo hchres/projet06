@@ -52,6 +52,7 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFEF8;
 }
 header {
 	display: flex;
@@ -142,6 +143,14 @@ li:hover {
 	font-weight: 700;
 	font-size: 16px;
 	font-family: 'Syne', serif;
+	padding: 0 15px 0 15px;
+  	min-width: 100px;
+	cursor: pointer;
+}
+
+.categories .button_selected {
+	background-color: #1D6154;
+	color: white;
 }
 
 .gallery {
@@ -202,6 +211,51 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 2em;
 }
 
+#login {
+	width: 33%;
+ 	margin: 200px auto 600px;
+}
+
+#login > * {
+	text-align: center;
+}
+
+#login h2{
+	margin-bottom: 20px;
+}
+
+#login form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#login input {
+	height: 51px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#login label {
+	margin: 2em 0 1em 0;
+}
+
+#login #connection {
+	height: 36px;
+}
+
+.forgot_pw {
+	text-align: center;
+	color: black;
+}
+
+footer {
+	background-color: white;
+	height: 60px;
+	width: 100%;
+}

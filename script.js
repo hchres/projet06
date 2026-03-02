@@ -1,3 +1,5 @@
+let works = [];
+
 async function getWorks() {
   const response = await fetch("http://localhost:5678/api/works");
 
@@ -31,12 +33,13 @@ function displayWorks(works) {
 
 async function init() {
     try {
-        const works = await getWorks();
+        works = await getWorks();
+        const categories = await getCategories()
+
         displayWorks(works);
 
-        // const categories = await getCategories()
-        // categories.unshift({"id": 0, "name": "Tous"});
-        // console.log(categories)
+        categories.unshift({"id": 0, "name": "Tous"});
+        displayCategories(categories)
     } catch (error) {
         console.log(error);
     }
@@ -45,16 +48,55 @@ async function init() {
 void init();
 
 
-// async function getCategories() {
-//   const response = await fetch("http://localhost:5678/api/categories");
-//
-//   if (!response.ok) {
-//     throw new Error(`Erreur API: ${response.status}`);
-//   }
-//
-//   return await response.json();
-// }
-//
-// function displayCategories(filtres) {
-//   const categories = document.querySelector(".categories");
-//   categories.innerHTML = "";
+async function getCategories() {
+  const response = await fetch("http://localhost:5678/api/categories");
+
+  if (!response.ok) {
+    throw new Error(`Erreur API: ${response.status}`);
+  }
+
+  return await response.json();
+}
+
+function displayCategories(categories) {
+    const divCategories = document.querySelector(".categories");
+    divCategories.innerHTML = "";
+
+    categories.forEach((category, index) => {
+        const button = document.createElement("button");
+        button.id = category.id;
+        button.textContent = category.name;
+
+        if (index === 0) {
+            button.className += "button_selected";
+        }
+        button.addEventListener("click", () => applyFilter(category.id));
+
+        divCategories.appendChild(button);
+    })
+}
+
+function applyFilter(catId) {
+    let filteredWorks;
+
+    if (catId === 0) {
+        filteredWorks = works;
+    } else {
+        filteredWorks = works.filter((work) => {
+            return work.categoryId === catId;
+        })
+    }
+    changeButtonSelected(catId.toString());
+
+    displayWorks(filteredWorks);
+}
+
+function changeButtonSelected(categoryId) {
+    let buttons = document.querySelectorAll(".categories button");
+    buttons.forEach((button) => {
+        button.className = "";
+        if (button.id === categoryId) {
+            button.className = "button_selected";
+        }
+    })
+}
